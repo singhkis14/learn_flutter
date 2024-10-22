@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 
-class StartScreen extends StatefulWidget {
+class StartScreen extends StatelessWidget {
   final void Function() startQuiz;
 
   const StartScreen(this.startQuiz, {super.key});
 
-  @override
-  State<StartScreen> createState() => _StartScreenState();
-}
-
-class _StartScreenState extends State<StartScreen> {
   final String logoAsset = 'assets/images/quiz-logo.png';
 
   @override
@@ -35,7 +30,7 @@ class _StartScreenState extends State<StartScreen> {
             height: 20,
           ),
           OutlinedButton.icon(
-            onPressed: widget.startQuiz,
+            onPressed: startQuiz,
             label: const Text(
               'Start Quiz!',
               style: TextStyle(color: Colors.white),
