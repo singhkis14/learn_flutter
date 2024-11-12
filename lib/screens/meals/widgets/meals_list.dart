@@ -4,9 +4,8 @@ import 'package:learn_flutter/screens/meals/widgets/meal_item.dart';
 
 class MealList extends StatelessWidget {
   final List<Meal> meals;
-  final void Function(Meal) onLikeToggle;
 
-  const MealList({super.key, required this.meals, required this.onLikeToggle});
+  const MealList({super.key, required this.meals});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +13,7 @@ class MealList extends StatelessWidget {
       itemCount: meals.length,
       itemBuilder: (context, index) {
         var meal = meals[index];
-        return MealItem(
-          meal,
-          onLikeToggle: onLikeToggle,
-        );
+        return MealItem(meal);
       },
     );
     ;

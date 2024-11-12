@@ -7,10 +7,9 @@ import 'package:learn_flutter/screens/categories/widgets/category_grid_item.dart
 import 'package:learn_flutter/screens/meals/meals_screen.dart';
 
 class CategoriesScreen extends StatelessWidget implements TitleHolder {
-  final void Function(Meal) onLikeToggle;
   final List<Meal> availableMeals;
 
-  const CategoriesScreen({super.key, required this.onLikeToggle, required this.availableMeals});
+  const CategoriesScreen({super.key, required this.availableMeals});
 
   @override
   String get title {
@@ -23,7 +22,7 @@ class CategoriesScreen extends StatelessWidget implements TitleHolder {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return MealsScreen(mealTitle: category.title, meals: categotyMeals, onLikeToggle: onLikeToggle);
+          return MealsScreen(mealTitle: category.title, meals: categotyMeals);
         },
       ),
     );

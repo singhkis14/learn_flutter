@@ -13,13 +13,16 @@ class MealsScreen extends StatelessWidget implements TitleHolder {
   }
 
   final List<Meal> meals;
-  final void Function(Meal) onLikeToggle;
 
-  const MealsScreen({super.key, this.mealTitle, required this.meals, required this.onLikeToggle});
+  const MealsScreen({super.key, this.mealTitle, required this.meals});
 
   @override
   Widget build(BuildContext context) {
-    final content = meals.isEmpty ? const EmptyMeal() : MealList(meals: meals, onLikeToggle: onLikeToggle);
+    final content = meals.isEmpty
+        ? const EmptyMeal()
+        : MealList(
+            meals: meals,
+          );
     if (mealTitle == null) {
       return content;
     } else {
