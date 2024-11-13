@@ -24,9 +24,20 @@ class MealDetailScreen extends ConsumerWidget {
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
             },
-            icon: Icon(
-              Icons.favorite,
-              color: isFavorite ? Colors.red : Colors.white,
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                  alignment: Alignment.bottomCenter,
+                  turns: Tween(begin: 0.1, end: 1.0).animate(animation),
+                  child: child,
+                );
+              },
+              child: Icon(
+                key: ValueKey(isFavorite),
+                Icons.favorite,
+                color: isFavorite ? Colors.red : Colors.white,
+              ),
             ),
           ),
         ],
@@ -34,12 +45,15 @@ class MealDetailScreen extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            FadeInImage.memoryNetwork(
-              width: double.infinity,
-              height: 300,
-              fit: BoxFit.cover,
-              placeholder: kTransparentImage,
-              image: meal.imageUrl,
+            Hero(
+              tag: meal.id,
+              child: FadeInImage.memoryNetwork(
+                width: double.infinity,
+                height: 300,
+                fit: BoxFit.cover,
+                placeholder: kTransparentImage,
+                image: meal.imageUrl,
+              ),
             ),
             const SizedBox(height: 14),
             Text(
