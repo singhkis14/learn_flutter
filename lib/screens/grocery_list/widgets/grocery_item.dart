@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:learn_flutter/models/grocery_item.dart';
+import 'package:learn_flutter/providers/grocery_provider.dart';
 
-class GroceryItemRow extends StatelessWidget {
+class GroceryItemRow extends ConsumerWidget {
   final GroceryItem groceryItem;
 
-  final void Function(GroceryItem) onDismisse;
-
-  const GroceryItemRow(this.groceryItem, {super.key, required this.onDismisse});
+  const GroceryItemRow(this.groceryItem, {super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Dismissible(
       onDismissed: (direction) {
-        onDismisse(groceryItem);
+        ref.read(groceryProvider.notifier).removeItem(groceryItem);
       },
       key: ValueKey(groceryItem),
       child: ListTile(

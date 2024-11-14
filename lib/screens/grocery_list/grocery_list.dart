@@ -1,51 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:learn_flutter/models/grocery_item.dart';
+import 'package:learn_flutter/providers/grocery_provider.dart';
 import 'package:learn_flutter/screens/grocery_list/widgets/grocery_item.dart';
 import 'package:learn_flutter/screens/new_item/new_item_screen.dart';
 
-class GroceryList extends StatefulWidget {
+class GroceryList extends ConsumerWidget {
   const GroceryList({super.key});
 
   @override
-  State<GroceryList> createState() => _GroceryListState();
-}
-
-class _GroceryListState extends State<GroceryList> {
-  final List<GroceryItem> _groceryItems = [];
-
-  void _addItem() async {
-    final item = await Navigator.of(context).push<GroceryItem>(MaterialPageRoute(
-      builder: (context) {
-        return const NewItemScreen();
-      },
-    ));
-
-    if (item == null) {
-      return;
-    }
-    setState(() {
-      _groceryItems.add(item);
-    });
-  }
-
-  void _removeItem(GroceryItem item) {
-    if (_groceryItems.contains(item)) {
-      _groceryItems.remove(item);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var groceryItems = ref.watch(groceryProvider);
     final Widget content;
-    if (_groceryItems.isNotEmpty) {
+    if (groceryItems.isNotEmpty) {
       content = ListView.builder(
-          itemCount: _groceryItems.length,
+          itemCount: groceryItems.length,
           itemBuilder: (context, index) {
-            final item = _groceryItems[index];
-            return GroceryItemRow(
-              item,
-              onDismisse: _removeItem,
-            );
+            final item = groceryItems[index];
+            return GroceryItemRow(item);
           });
     } else {
       content = const Center(child: Text('Try adding some groceries!!!'));
@@ -56,7 +28,13 @@ class _GroceryListState extends State<GroceryList> {
           title: const Text('Your Groceries'),
           actions: [
             IconButton(
-              onPressed: _addItem,
+              onPressed: () {
+                Navigator.of(context).push<GroceryItem>(MaterialPageRoute(
+                  builder: (context) {
+                    return const NewItemScreen();
+                  },
+                ));
+              },
               icon: const Icon(Icons.add),
             ),
           ],
