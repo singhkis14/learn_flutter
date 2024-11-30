@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_flutter/provider/hello_world_provider.dart';
 import 'package:learn_flutter/screens/home.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,7 +12,9 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Riverpod'),
         ),
-        body: const HomeScreen(),
+        body: const Center(
+          child: CounterWidger(),
+        ),
       ),
     );
   }
